@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>acikoyun · Sıcak / Soğuk Slotlar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #05070c;
+      --bg-elevated: #111827;
+      --bg-elevated-soft: #0b1120;
+      --border-subtle: #1f2937;
+      --text-main: #e5e7eb;
+      --text-soft: #9ca3af;
+      --text-softer: #6b7280;
+      --accent: #facc15;
+      --accent-soft: rgba(250, 204, 21, 0.15);
+      --accent-strong: #f59e0b;
+      --danger: #ef4444;
+      --success: #22c55e;
+      --cold: #0ea5e9;
+      --radius-lg: 16px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.7);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #020617 0, #020617 35%, #020617 60%, #020617 100%);
+      background-color: var(--bg);
+      color: var(--text-main);
+    }
+    /* TOP BAR */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.98),
+        rgba(15, 23, 42, 0.9),
+        rgba(15, 23, 42, 0.8)
+      );
+      border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      font-size: 15px;
+    }
+    .brand-logo {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #fef9c3, #facc15 45%, #92400e);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #020617;
+      font-weight: 800;
+      box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.85),
+        0 18px 35px rgba(0, 0, 0, 0.7);
+    }
+    .brand span:last-child {
+      color: #6b7280;
+      font-weight: 500;
+    }
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.18);
+      color: #bbf7d0;
+    }
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #bbf7d0, #22c55e);
+      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.3);
+    }
+    /* Telegram link */
+    .tg-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: radial-gradient(circle at 0 0, rgba(15, 23, 42, 0.95), #020617);
+      color: #e5e7eb;
+      font-size: 11px;
+      text-decoration: none;
+    }
+    .tg-link:hover {
+      border-color: rgba(96, 165, 250, 0.9);
+    }
+    .tg-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #bfdbfe, #3b82f6);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #0b1120;
+    }
+    /* TOP ADS */
+    .ad-strip-wrapper {
+      max-width: 1280px;
+      margin: 10px auto 0;
+      padding: 0 18px 6px;
+    }
+    .ad-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 12px;
+      margin-bottom: 6px;
+      border-radius: 999px;
+      background: linear-gradient(to right, #111827, #020617);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      font-size: 12px;
+      color: #e5e7eb;
+      text-decoration: none;
+    }
+.ad-banner {
+  transition: all 0.25s ease;
+}
+.ad-banner:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(250, 204, 21, 0.18);
+  border-color: rgba(250, 204, 21, 0.55);
+  opacity: 0.95;
+}
+    .ad-banner span.ad-site {
+      font-weight: 600;
+      color: #facc15;
+    }
+    .ad-banner span.ad-text {
+      color: #d1d5db;
+      margin-left: 4px;
+    }
+    .ad-banner span.ad-cta {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(250, 204, 21, 0.1);
+      border: 1px solid rgba(250, 204, 21, 0.6);
+      color: #fef9c3;
+    }
+    .page {
+      max-width: 1280px;
+      margin: 18px auto 60px;
+      padding: 0 18px 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(260px, 0.9fr);
+      gap: 18px;
+    }
+@media (min-width: 1024px) {
+  .page > section {
+    margin-top: -14px !important;
+  }
+}
+    @media (max-width: 980px) {
+      .page { grid-template-columns: minmax(0, 1fr); }
+    }
+    .card {
+      background: radial-gradient(circle at top left, #111827, #020617);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(31, 41, 55, 0.95);
+      box-shadow: var(--shadow-soft);
+      padding: 16px 18px 14px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title span.icon { font-size: 15px; }
+    .card-subtitle { font-size: 12px; color: var(--text-softer); }
+    .table-card { margin-top: 14px; }
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .table-title {
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .table-title .badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: var(--text-soft);
+    }
+    .table-title .emoji { font-size: 16px; }
+    .table-hint { font-size: 11px; color: var(--text-softer); }
+    table {
+      width: 100%;
+      border-spacing: 0;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    thead tr { background: rgba(17, 24, 39, 0.9); }
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table {
+  min-width: 900px;   /* kritik satır */
+}
+@media (min-width: 1024px) {
+  .table-wrapper {
+    overflow-x: visible; /* masaüstünde scrollu kaldır */
+  }
+  table {
+    min-width: unset;    /* masaüstünde genişlik zorlamasını kaldır */
+    width: 100%;         /* tablo tam ekrana otursun */
+  }
+}
+/* Mobilde tabloları daralt */
+@media (max-width: 640px) {
+  .table-wrapper table {
+    min-width: 720px;   /* 900 yerine daha dar; istersen 680'e düşürebilirsin */
+  }
+  thead th,
+  tbody td {
+    padding: 6px 4px;   /* hücre içi boşluğu azalt */
+    font-size: 11px;    /* yazıyı biraz küçült */
+  }
+  /* Oyun isimleri tek satıra zorlanmasın, satır kırılsın */
+  .col-name {
+    white-space: normal;
+  }
+}
+    thead th {
+      text-align: left;
+      padding: 8px 6px;
+      color: var(--text-soft);
+      font-weight: 500;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.9);
+      white-space: nowrap;
+    }
+    tbody tr { border-bottom: 1px solid rgba(31, 41, 55, 0.7); }
+    tbody tr:nth-child(even) { background: rgba(15, 23, 42, 0.65); }
+    tbody tr:nth-child(odd) { background: rgba(15, 23, 42, 0.4); }
+    td {
+      padding: 7px 6px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    .col-rank { color: var(--text-softer); font-size: 11px; }
+    .col-name { font-weight: 500; }
+    .col-provider { color: var(--text-soft); font-size: 11px; }
+    .rtp-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.18);
+      border: 1px solid rgba(45, 212, 191, 0.45);
+      color: #a5f3fc;
+      font-size: 11px;
+    }
+    .rtp-change {
+      color: var(--success);
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .rtp-change.down { color: var(--cold); }
+    .heat-pill {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(248, 113, 113, 0.12);
+      border: 1px solid rgba(248, 113, 113, 0.5);
+      color: #fecaca;
+      font-size: 11px;
+    }
+    .heat-pill.cold {
+      background: rgba(59, 130, 246, 0.12);
+      border-color: rgba(59, 130, 246, 0.6);
+      color: #bfdbfe;
+    }
+    .trend-pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .trend-up {
+      background: rgba(34, 197, 94, 0.08);
+      color: #bbf7d0;
+      border: 1px solid rgba(22, 163, 74, 0.5);
+    }
+    .trend-down {
+      background: rgba(59, 130, 246, 0.08);
+      color: #bfdbfe;
+      border: 1px solid rgba(59, 130, 246, 0.5);
+    }
+    .trend-flat {
+      background: rgba(148, 163, 184, 0.12);
+      color: #e5e7eb;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+    }
+    .btn {
+      font-family: inherit;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 11px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: transform 0.08s ease, box-shadow 0.08s ease,
+        background 0.1s ease;
+    }
+    .btn:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: none;
+    }
+    .btn-primary {
+      background: linear-gradient(to right, #f59e0b, #fbbf24);
+      color: #111827;
+      box-shadow: 0 10px 25px rgba(251, 191, 36, 0.45);
+    }
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.2);
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: var(--text-soft);
+    }
+    .btn.small { padding: 3px 10px; font-size: 10px; }
+    .sidebar-card { margin-bottom: 14px; }
+    .winners-list { font-size: 11px; margin-top: 8px; }
+    .winners-list-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 5px 0;
+      border-bottom: 1px dashed rgba(31, 41, 55, 0.7);
+    }
+    .winners-list-row:last-child { border-bottom: none; }
+    .w-site { color: var(--text-soft); }
+    .w-user { color: var(--text-softer); font-size: 10px; }
+    .w-amount { font-weight: 600; font-size: 11px; color: #bbf7d0; }
+.w-amount-link {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.12s ease;
+}
+.w-amount-link:hover {
+  color: #facc15;
+  background: rgba(250, 204, 21, 0.08);
+  box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.55);
+  transform: translateY(-1px) scale(1.03);
+  cursor: pointer;
+}
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: var(--text-soft);
+      font-size: 10px;
+    }
+    .freespin-list {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 11px;
+    }
+    .freespin-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+    }
+    .freespin-row span:first-child { color: var(--text-soft); }
+    .freespin-row span.game { color: #e5e7eb; font-weight: 500; }
+    .partners-strip { display: flex; gap: 8px; margin-top: 8px; }
+    .partner-badge {
+      flex: 1 1 0;
+      min-height: 40px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 15% 0, #111827, #020617);
+      border: 1px solid rgba(55, 65, 81, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+.partners-strip-logos {
+  overflow: hidden;
+  position: relative;
+  padding: 6px 0;
+}
+.partners-track {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  animation: partnersScroll 28s linear infinite;
+}
+.partner-logo {
+  flex: 0 0 auto;
+  padding: 10px 20px;
+  background: radial-gradient(circle at 15% 0, #111827, #020617);
+  border: 1px solid rgba(55, 65, 81, 0.9);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.partner-logo img {
+  max-height: 28px;
+  max-width: 120px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.9;
+}
+.partner-logo:hover img {
+  opacity: 1;
+  filter: grayscale(0.2);
+}
+@keyframes partnersScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+    .alert-card {
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: radial-gradient(circle at 0 0, #fef9c3, #fbbf24);
+      color: #1f2937;
+      border-color: #f59e0b;
+    }
+    .alert-card .left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .alert-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: #f97316;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #fefce8;
+      font-size: 14px;
+    }
+    .alert-actions { display: flex; gap: 6px; }
+    .btn-alert {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: none;
+      font-size: 10px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-alert-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(15, 23, 42, 0.3);
+    }
+    .btn-alert-primary { background: #111827; color: #fde68a; }
+    .foot-note {
+      margin-top: 6px;
+      font-size: 9px;
+      color: rgba(17, 24, 39, 0.8);
+      opacity: 0.85;
+    }
+    .badge-hot,
+    .badge-cold {
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 10px;
+    }
+    .badge-hot {
+      background: rgba(248, 113, 113, 0.15);
+      color: #fecaca;
+      border: 1px solid rgba(248, 113, 113, 0.6);
+    }
+    .badge-cold {
+      background: rgba(59, 130, 246, 0.15);
+      color: #bfdbfe;
+      border: 1px solid rgba(59, 130, 246, 0.6);
+    }
+    .muted { color: var(--text-softer); }
+    /* Sıcak Alarmı sağ alt push */
+    #hot-alert {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      max-width: 360px;
+      margin: 0;
+      z-index: 999;
+      border-radius: 18px;
+      animation: hotAlertSlideIn 0.4s ease-out;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+    }
+.hot-alert-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.35);
+  color: #fff;
+  cursor: pointer;
+  line-height: 24px;
+  text-align: center;
+  padding: 0;
+}
+.hot-alert-close:hover {
+  background: rgba(0,0,0,0.55);
+}
+    @keyframes hotAlertSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 640px) {
+      #hot-alert {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        max-width: none;
+      }
+    }
+.footer {
+  margin-top: 70px;
+  padding: 40px 0 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  opacity: 0.95;
+}
+.footer-tg-icon {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+.footer-tg-img {
+  width: 26px;   /* ikonun gerçek boyutu */
+  height: 26px;
+  border-radius: 999px;
+}
+.footer-tg-icon:hover {
+  transform: scale(1.10);
+  opacity: 1;
+}
+.footer-note {
+  font-size: 10px;
+  color: var(--text-softer);
+  opacity: 0.55;
+}
+/* ---- Evrensel CTA Buton Hover Efekti ---- */
+button,
+.btn,
+.button,
+.play-btn,
+.hemen-al,
+.hemen-al-btn,
+.fs-claim-btn,
+.freespin-btn,
+.push-play-btn {
+  transition: all 0.25s ease !important;
+}
+button:hover,
+.btn:hover,
+.button:hover,
+.play-btn:hover,
+.hemen-al:hover,
+.hemen-al-btn:hover,
+.fs-claim-btn:hover,
+.freespin-btn:hover,
+.push-play-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 22px rgba(250, 204, 21, 0.25);
+  opacity: 0.95;
+}
+  </style>
+</head>
+<body>
+  <!-- TOP ADS -->
+  <div class="ad-strip-wrapper">
+    <a href="#" class="ad-banner">
+      <div>
+        <span class="ad-site">Betosfer</span>
+        <span class="ad-text">· Her yatırıma özel freespin fırsatları</span>
+      </div>
+      <span class="ad-cta">Detay</span>
+    </a>
+    <a href="#" class="ad-banner">
+      <div>
+        <span class="ad-site">Betpas</span>
+        <span class="ad-text">· Süper oranlar, süper kombine bonuslar</span>
+      </div>
+      <span class="ad-cta">Hemen İncele</span>
+    </a>
+    <a href="#" class="ad-banner">
+      <div>
+        <span class="ad-site">Old Casino</span>
+        <span class="ad-text">· Yüksek RTP’li slotlarda özel kampanyalar</span>
+      </div>
+      <span class="ad-cta">Kampanyalar</span>
+    </a>
+  </div>
+  <main class="page">
+    <section>
+      <!-- HOT TABLE -->
+      <section class="card table-card">
+        <div class="table-header">
+          <div class="table-title">
+            <span class="emoji">🔥</span>Sıcak Oyunlar
+          <span class="badge">Sağa kaydır</span>
+          </div>
+          <div class="table-hint">
+            İlk 10 oyun · Heat değeri en yüksek olandan düşük olana doğru sıralanır (min 80)
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Oyun</th>
+                <th>Sağlayıcı</th>
+                <th>RTP (canlı)</th>
+                <th>Δ RTP</th>
+                <th>Heat</th>
+                <th>Son Max Win</th>
+            
+                <th>Trend</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="hot-body"></tbody>
+          </table>
+        </div>
+      </section>
+      <!-- COLD TABLE -->
+      <section class="card table-card">
+        <div class="table-header">
+          <div class="table-title">
+            <span class="emoji">🧊</span>Soğuk Oyunlar
+            <span class="badge">Sağa kaydır</span>
+          </div>
+          <div class="table-hint">
+            Heat değeri en düşük olandan en yüksek olana doğru sıralanır
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Oyun</th>
+                <th>Sağlayıcı</th>
+                <th>RTP (canlı)</th>
+                <th>Δ RTP</th>
+                <th>Heat</th>
+                <th>Son Max Win</th>
+                <th>Trend</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="cold-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+    <aside>
+      <section class="card sidebar-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <span class="icon">🏆</span>En Çok Kazananlar
+            </div>
+            <div class="card-subtitle">
+              Son 3 günde simüle edilen ilk 5 büyük slot kazancı
+            </div>
+          </div>
+                  </div>
+        <div class="winners-list" id="winners-list"></div>
+      </section>
+      <section class="card sidebar-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <span class="icon">🎁</span>Freespin Teklifleri
+            </div>
+            <div class="card-subtitle">Partner sitelerde öne çıkan FS’ler</div>
+          </div>
+     
+        </div>
+        <div class="freespin-list">
+          <div class="freespin-row">
+            <span>Betosfer · <span class="game">Sugar Rush 50FS</span></span>
+            <button class="btn btn-primary small">Hemen Al</button>
+          </div>
+          <div class="freespin-row">
+            <span>Betpas · <span class="game">Gates 25FS (Çevrimsiz)</span></span>
+            <button class="btn btn-primary small">Hemen Al</button>
+          </div>
+          <div class="freespin-row">
+            <span>Old Casino · <span class="game">Wanted 20FS</span></span>
+            <button class="btn btn-primary small">Hemen Al</button>
+          </div>
+          <div class="freespin-row">
+            <span>Restbet · <span class="game">Sweet Bonanza 40FS</span></span>
+            <button class="btn btn-primary small">Hemen Al</button>
+          </div>
+        </div>
+      </section>
+      <section class="card sidebar-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">
+              <span class="icon">🤝</span>Açık Oyun Partnerleri
+            </div>
+            <div class="card-subtitle">
+              Canlı istatistik entegrasyonu planlanan sağlayıcılar
+            </div>
+          </div>
+        </div>
+        <div class="partners-strip partners-strip-logos">
+    <div class="partners-track">
+      <!-- 1. TUR -->
+      <div class="partner-logo"><img src="logos/pragmaticplay.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/amusnet.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/egtd.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/hacksawgaming.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/netent.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/fugaso.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/nolimit.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/novomatic.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/smartsoftgaming.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/playson.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/yggdrasil.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/redtiger.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/booominggames.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/betsoft.png" alt=""></div>
+      <!-- 2. TUR – loop için tekrar -->
+      <div class="partner-logo"><img src="logos/pragmaticplay.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/amusnet.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/egtd.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/hacksawgaming.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/netent.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/fugaso.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/nolimit.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/novomatic.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/smartsoftgaming.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/playson.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/yggdrasil.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/redtiger.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/booominggames.png" alt=""></div>
+      <div class="partner-logo"><img src="logos/betsoft.png" alt=""></div>
+    </div>
+  </div>
+        </div>
+      </section>
+    </aside>
+  </main>
+<footer class="footer">
+  <a href="https://t.me/acikmedya" target="_blank" class="footer-tg-icon">
+    <img src="https://telegram.org/img/t_logo.svg" alt="Telegram" class="footer-tg-img" />
+  </a>
+  <div class="footer-note">
+    Açık Medya kuruluşudur.
+  </div>
+</footer>
+  <!-- Sıcak Alarmı: push -->
+  <section class="card alert-card sidebar-card" id="hot-alert">
+<button id="hot-alert-close" class="hot-alert-close">×</button>
+    <div class="left">
+      <div class="alert-icon">!</div>
+      <div>
+        <div><strong>Sıcak Alarmı</strong></div>
+        <div id="hot-alert-text">
+          Gates of Olympus son 5 dk içinde 2.20% RTP artışı gösterdi.
+        </div>
+        <div class="foot-note">
+          Yalnızca istatistiki veri sunar. Lütfen bilinçli oynayınız.
+        </div>
+      </div>
+    </div>
+    <div class="alert-actions">
+      <button class="btn-alert btn-alert-primary">Hemen Oyna</button>
+    </div>
+  </section>
+<script>
+  const API_BASE = "https://acikoyun-backend.onrender.com";
+  const UPDATE_INTERVAL_MS = 10000;
+
+  let games = [];
+  let gameById = {};
+  let orderHot = [];
+  let orderCold = [];
+
+  function trendInfo(direction) {
+    if (!direction) return { className: "trend-flat", label: "▬ Dengeli" };
+    if (direction.startsWith("up"))
+      return { className: "trend-up", label: "▲ Yükseliş" };
+    if (direction.startsWith("down"))
+      return { className: "trend-down", label: "▼ Düşüş" };
+    return { className: "trend-flat", label: "▬ Dengeli" };
+  }
+
+  function minutesToText(mins) {
+    if (mins < 1) return "az önce";
+    const m = Math.round(mins);
+    return `${m} dk önce`;
+  }
+
+  function syncFromServerState(state) {
+    games = state.games || [];
+    gameById = {};
+    games.forEach((g) => { gameById[g.id] = g; });
+    orderHot = state.orderHot || [];
+    orderCold = state.orderCold || [];
+    renderTables();
+    updateHotAlert();
+  }
+
+  async function fetchState() {
+    try {
+      const res = await fetch(`${API_BASE}/api/state`);
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      syncFromServerState(data);
+    } catch (err) {
+      console.error("API hata:", err);
+    }
+  }
+
+  function renderTables() {
+    const hotBody = document.getElementById("hot-body");
+    const coldBody = document.getElementById("cold-body");
+    if (!hotBody || !coldBody) return;
+
+    hotBody.innerHTML = "";
+    coldBody.innerHTML = "";
+
+    // HOT TABLOSU
+    orderHot.forEach((id, index) => {
+      const g = gameById[id];
+      if (!g) return;
+      const tr = document.createElement("tr");
+      const tInfo = trendInfo(g.trendDirection || "flat");
+      const delta = g.deltaRtp || 0;
+      const deltaSign = delta >= 0 ? "▲" : "▼";
+      const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
+      const deltaText = Math.abs(delta).toFixed(2);
+
+      tr.innerHTML = `
+        <td class="col-rank">${index + 1}</td>
+        <td class="col-name">
+          ${g.name}<br />
+          <span class="badge-hot">Sıcak</span>
+        </td>
+        <td class="col-provider">${g.provider}</td>
+        <td><span class="rtp-pill">${g.rtp.toFixed(2)}%</span></td>
+        <td><span class="${deltaClass}">${deltaSign} ${deltaText}</span></td>
+        <td><span class="heat-pill">${g.heat}</span></td>
+        <td class="col-maxwin">
+          ${g.maxWinMultiplier}x<br />
+          <span class="maxwin-time">${minutesToText(g.lastMaxWinMinutes)}</span>
+        </td>
+        <td><span class="trend-pill ${tInfo.className}">${tInfo.label}</span></td>
+        <td><button class="btn btn-primary small" data-play-id="${g.id}">Oyna</button></td>
+      `;
+      hotBody.appendChild(tr);
+    });
+
+    // COLD TABLOSU
+    orderCold.forEach((id, index) => {
+      const g = gameById[id];
+      if (!g) return;
+      const tr = document.createElement("tr");
+      const tInfo = trendInfo(g.trendDirection || "flat");
+      const delta = g.deltaRtp || 0;
+      const deltaSign = delta >= 0 ? "▲" : "▼";
+      const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
+      const deltaText = Math.abs(delta).toFixed(2);
+
+      tr.innerHTML = `
+        <td class="col-rank">${index + 1}</td>
+        <td class="col-name">
+          ${g.name}<br />
+          <span class="badge-cold">Soğuk</span>
+        </td>
+        <td class="col-provider">${g.provider}</td>
+        <td><span class="rtp-pill">${g.rtp.toFixed(2)}%</span></td>
+        <td><span class="${deltaClass}">${deltaSign} ${deltaText}</span></td>
+        <td><span class="heat-pill cold">${g.heat}</span></td>
+        <td class="col-maxwin">
+          ${g.maxWinMultiplier}x<br />
+          <span class="maxwin-time">${minutesToText(g.lastMaxWinMinutes)}</span>
+        </td>
+        <td><span class="trend-pill ${tInfo.className}">${tInfo.label}</span></td>
+        <td><button class="btn btn-primary small" data-play-id="${g.id}">Oyna</button></td>
+      `;
+      coldBody.appendChild(tr);
+    });
+
+    bindPlayButtons();
+  }
+
+  function bindPlayButtons() {
+    document.querySelectorAll("[data-play-id]").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        window.open("https://google.com", "_blank");
+      })
+    );
+  }
+
+  function updateHotAlert() {
+    const text = document.getElementById("hot-alert-text");
+    if (!text || !orderHot.length) return;
+    const hotGames = orderHot.map((id) => gameById[id]).filter(Boolean);
+    if (!hotGames.length) return;
+
+    let best = hotGames[0];
+    hotGames.forEach((g) => {
+      if ((g.deltaRtp || 0) > (best.deltaRtp || 0)) best = g;
+    });
+
+    text.textContent = `${best.name} son 5 dk içinde yaklaşık ${best.deltaRtp.toFixed(
+      2
+    )}% RTP artışı gösterdi. Heat ${best.heat} seviyesinde.`;
+  }
+
+  function renderWinners() {
+    const winners = [
+      { site: "Betosfer",   user: "***q9", amount: "5.800.000 TL", url: "https://google.com" },
+      { site: "Betpas",     user: "***ak", amount: "4.120.000 TL", url: "https://google.com" },
+      { site: "Old Casino", user: "***c7", amount: "3.575.000 TL", url: "https://google.com" },
+      { site: "Betpas",     user: "***ve", amount: "2.584.496 TL", url: "https://google.com" },
+      { site: "Bethand",    user: "***k9", amount: "1.058.168 TL", url: "https://google.com" }
+    ];
+    const container = document.getElementById("winners-list");
+    if (!container) return;
+    container.innerHTML = "";
+    winners.forEach((w, idx) => {
+      const row = document.createElement("div");
+      row.className = "winners-list-row";
+      row.innerHTML = `
+        <div>
+          <div class="w-site">${idx + 1}. ${w.site}</div>
+          <div class="w-user">Kullanıcı: ${w.user}</div>
+        </div>
+        <div class="w-amount">
+          <a href="${w.url}" target="_blank" rel="noopener" class="w-amount-link">
+            ${w.amount}
+          </a>
+        </div>
+      `;
+      container.appendChild(row);
+    });
+  }
+
+  const adLinks = [
+    "https://google.com",
+    "https://google.com",
+    "https://google.com"
+  ];
+
+  function bindAdBanners() {
+    document.querySelectorAll(".ad-banner").forEach((banner, index) => {
+      banner.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.open(adLinks[index], "_blank");
+      });
+    });
+  }
+
+  window.addEventListener("load", () => {
+    renderWinners();
+    fetchState();
+    setInterval(fetchState, UPDATE_INTERVAL_MS);
+
+    const closeBtn = document.getElementById("hot-alert-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        const alert = document.getElementById("hot-alert");
+        if (alert) alert.style.display = "none";
+      });
+    }
+
+    bindAdBanners();
+  });
+</script>
+
+ 
+</body>
+</html>
+
+
+
+
+
+
