@@ -699,11 +699,12 @@ button:hover,
 
 .strip-gif-img {
   display: block;
-  width: 100%;
-  max-width: 728px;   /* GIF’in gerçek genişliği */
-  height: auto;
+  width: 100%;      /* container ne kadarsa o kadar */
+  max-width: 100%;  /* 728 sınırlamasını kaldırdık */
+  height: auto;     /* oranı koru */
   border-radius: var(--radius-lg);
 }
+
   </style>
 </head>
 <body>
