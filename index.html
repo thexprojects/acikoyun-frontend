@@ -1137,17 +1137,6 @@ function bindFreespinButtons() {
     });
   });
 }
-function bindFreespinButtons() {
-  document.querySelectorAll(".fs-btn").forEach((btn) => {
-    const url = btn.dataset.url;
-    if (!url) return;
-
-    btn.addEventListener("click", () => {
-      window.open(url, "_blank");
-    });
-  });
-}
-
   window.addEventListener("load", () => {
     renderWinners();
     fetchState();
@@ -1162,6 +1151,8 @@ function bindFreespinButtons() {
     }
 
     bindAdBanners();
+    bindFreespinButtons(); // 🔥 Freespin butonlarını AKTİF eden satır
+  });
   });
 </script>
 
