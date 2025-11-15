@@ -704,6 +704,34 @@ button:hover,
   height: auto;     /* oranı koru */
   border-radius: var(--radius-lg);
 }
+/* Header altındaki 728x90 banner (Ligobet) */
+.top-strip-wrapper {
+  max-width: 1280px;
+  margin: 8px auto 0;
+  padding: 0 18px;             /* TOP ADS ile uyumlu */
+  display: flex;
+  justify-content: center;
+}
+
+.top-strip-img {
+  display: block;
+  width: 100%;
+  max-width: 728px;            /* Masaüstünde 728x90 gibi durur */
+  height: auto;
+  border-radius: var(--radius-lg);
+}
+
+/* Mobil optimizasyon */
+@media (max-width: 640px) {
+  .top-strip-wrapper {
+    margin-top: 6px;
+    padding: 0 12px;
+  }
+  .top-strip-img {
+    max-width: 100%;           /* Ekrana göre küçülsün */
+    border-radius: 12px;
+  }
+}
 
   </style>
 </head>
@@ -730,6 +758,15 @@ button:hover,
         <span class="ad-text">· 800 TL Yatırım Şartsız Deneme Bonusu</span>
       </div>
       <span class="ad-cta">Üye Ol</span>
+      <!-- HEADER ALTINDAKİ 728x90 LIGOBET BANNER -->
+  <div class="top-strip-wrapper">
+    <a href="https://cutt.ly/QtelcFFs" target="_blank" rel="noopener">
+      <img
+        src="banners/ligobet728x90.gif"
+        alt="Ligobet Banner"
+        class="top-strip-img"
+      />
+    </a>
     </a>
   </div>
   <main class="page">
