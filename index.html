@@ -1142,7 +1142,17 @@ function bindFreespinButtons() {
     });
   });
 }
-  window.addEventListener("load", () => {
+    function bindHotAlertButton() {
+    const btn = document.querySelector("#hot-alert .btn-alert-primary");
+    if (!btn) return;
+
+    const url = btn.dataset.url || "https://www.joybet669.pro/tr?btag=559047";
+    btn.addEventListener("click", () => {
+      window.open(url, "_blank");
+    });
+  }
+
+   window.addEventListener("load", () => {
     renderWinners();
     fetchState();
     setInterval(fetchState, UPDATE_INTERVAL_MS);
@@ -1156,6 +1166,10 @@ function bindFreespinButtons() {
     }
 
     bindAdBanners();
+    bindFreespinButtons();
+    bindHotAlertButton(); // 🔥 burası
+  });
+
     bindFreespinButtons(); // 🔥 Freespin butonlarını AKTİF eden satır
   });
 </script>
