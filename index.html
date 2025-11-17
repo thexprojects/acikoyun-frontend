@@ -704,7 +704,14 @@ button:hover,
   height: auto;     /* oranı koru */
   border-radius: var(--radius-lg);
 }
-
+/* XSLOT bannerını 728x90 oranına sabitle */
+.strip-gif-img.xslot-fix {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 728 / 90;
+  object-fit: cover;
+  display: block;
+}
   </style>
 </head>
 <body>
@@ -737,11 +744,11 @@ button:hover,
       <!-- ÜST BÖLÜM 728x90 XSLOT BANNER -->
 <section class="card strip-gif-card">
   <a href="https://cutt.ly/NteEarVX" target="_blank">
-    <img
-      src="banners/xslot728x90.gif"
-      alt="XSlot Banner"
-      class="strip-gif-img"
-    />
+   <img
+  src="banners/xslot728x90.gif"
+  alt="XSlot Banner"
+  class="strip-gif-img xslot-fix"
+/>
   </a>
 </section>
       <!-- ÜST BÖLÜM 728x90 LIGOBET BANNER -->
