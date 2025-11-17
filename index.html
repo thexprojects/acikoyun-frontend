@@ -1139,7 +1139,7 @@ function renderTables() {
     }
 
     // THUMBNAIL
-    const thumbSrc = getThumbnailSrc(g);
+    const thumbSrc = thumbnailSrc(g.name);
     const thumbHtml = thumbSrc
       ? `<img class="game-thumb" src="${thumbSrc}" alt="${g.name}" />`
       : "";
