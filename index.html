@@ -705,11 +705,11 @@ button:hover,
   border-radius: var(--radius-lg);
 }
 /* XSLOT bannerını 728x90 oranına sabitle */
+/* XSLOT bannerını masaüstünde 90px yüksekliğe sabitle */
 .strip-gif-img.xslot-fix {
   width: 100%;
-  height: auto;
-  aspect-ratio: 728 / 90;
-  object-fit: cover;
+  height: 90px;      /* kritik satır */
+  object-fit: cover; /* taşıyorsa kırpar, oran bozulmaz */
   display: block;
 }
   </style>
