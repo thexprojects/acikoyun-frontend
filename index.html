@@ -1024,17 +1024,28 @@ button:hover,
     const m = Math.round(mins);
     return `${m} dk önce`;
   }
-
   function syncFromServerState(state) {
+    // API'den gelen state'i al
     games = state.games || [];
     gameById = {};
-    games.forEach((g) => { gameById[g.id] = g; });
+    games.forEach((g) => {
+      gameById[g.id] = g;
+    });
     orderHot = state.orderHot || [];
     orderCold = state.orderCold || [];
+
+    // Tabloları ve hot alert'i güncelle
     renderTables();
     updateHotAlert();
-  }
 
+    // 🔥 1 NUMARA: OYUN İSİMLERİNİ TEK SEFERDE CONSOLE'A BAS
+    try {
+      const uniqueNames = [...new Set(games.map((g) => g.name))].sort();
+      console.log("OYUN İSİMLERİ:", uniqueNames);
+    } catch (e) {
+      console.warn("Oyun isimleri loglanırken hata:", e);
+    }
+  }
   async function fetchState() {
     try {
       const res = await fetch(`${API_BASE}/api/state`);
