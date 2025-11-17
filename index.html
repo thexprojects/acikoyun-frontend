@@ -290,6 +290,35 @@ table {
     }
     .col-rank { color: var(--text-softer); font-size: 11px; }
     .col-name { font-weight: 500; }
+    .game-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-thumb {
+  width: 52px;
+  height: 32px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.game-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.game-title {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.game-meta .badge-hot,
+.game-meta .badge-cold {
+  margin-top: 2px;
+}
     .col-provider { color: var(--text-soft); font-size: 11px; }
     .rtp-pill {
       display: inline-flex;
@@ -1064,94 +1093,121 @@ function hashString(str) {
   }
   return Math.abs(h);
 }
+function thumbnailFileName(name) {
+  return name
+    .toLowerCase()
+    .replace(/'/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function thumbnailSrc(name) {
+  return `thumbnails/${thumbnailFileName(name)}.webp`;
+}
 
   function renderTables() {
-    const hotBody = document.getElementById("hot-body");
-    const coldBody = document.getElementById("cold-body");
-    if (!hotBody || !coldBody) return;
+  const hotBody = document.getElementById("hot-body");
+  const coldBody = document.getElementById("cold-body");
+  if (!hotBody || !coldBody) return;
 
-    hotBody.innerHTML = "";
-    coldBody.innerHTML = "";
-    // HOT TABLOSU
-orderHot.forEach((id, index) => {
-  const g = gameById[id];
-  if (!g) return;
-  const tr = document.createElement("tr");
-  const tInfo = trendInfo(g.trendDirection || "flat");
-  const delta = g.deltaRtp || 0;
-  const deltaSign = delta >= 0 ? "▲" : "▼";
-  const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
-  const deltaText = Math.abs(delta).toFixed(2);
+  hotBody.innerHTML = "";
+  coldBody.innerHTML = "";
 
-  // 🔥 Son max win süresini 3–59 dk aralığında, oyuna özgü sabit bir değere map et
-  const key = g.id || g.name || `idx-${index}`;
-  const h = hashString(String(key));
-  const randomOffset = h % 57;      // 0–56
-  let lastMaxMinutes;
+  // HOT TABLOSU
+  orderHot.forEach((id, index) => {
+    const g = gameById[id];
+    if (!g) return;
+    const tr = document.createElement("tr");
+    const tInfo = trendInfo(g.trendDirection || "flat");
+    const delta = g.deltaRtp || 0;
+    const deltaSign = delta >= 0 ? "▲" : "▼";
+    const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
+    const deltaText = Math.abs(delta).toFixed(2);
 
-  // Eğer backend'ten gelen değer zaten 3–59 arasındaysa onu kullan,
-  // değilse hash'ten türetilen değeri kullan.
-  if (g.lastMaxWinMinutes >= 3 && g.lastMaxWinMinutes <= 59) {
-    lastMaxMinutes = g.lastMaxWinMinutes;
-  } else {
-    lastMaxMinutes = 3 + randomOffset; // 3–59 aralığı
-  }
+    const key = g.id || g.name || `idx-${index}`;
+    const h = hashString(String(key));
+    const randomOffset = h % 57; // 0–56
+    let lastMaxMinutes;
 
-  tr.innerHTML = `
-    <td class="col-rank">${index + 1}</td>
-    <td class="col-name">
-      ${g.name}<br />
-      <span class="badge-hot">Sıcak</span>
-    </td>
-    <td class="col-provider">${g.provider}</td>
-    <td><span class="rtp-pill">${g.rtp.toFixed(2)}%</span></td>
-    <td><span class="${deltaClass}">${deltaSign} ${deltaText}</span></td>
-    <td><span class="heat-pill">${g.heat}</span></td>
-    <td class="col-maxwin">
-      ${g.maxWinMultiplier}x<br />
-      <span class="maxwin-time">${minutesToText(lastMaxMinutes)}</span>
-    </td>
-    <td><span class="trend-pill ${tInfo.className}">${tInfo.label}</span></td>
-    <td><button class="btn btn-primary small" data-play-id="${g.id}">Oyna</button></td>
-  `;
-  hotBody.appendChild(tr);
-});
+    if (g.lastMaxWinMinutes >= 3 && g.lastMaxWinMinutes <= 59) {
+      lastMaxMinutes = g.lastMaxWinMinutes;
+    } else {
+      lastMaxMinutes = 3 + randomOffset; // 3–59
+    }
 
+    tr.innerHTML = `
+      <td class="col-rank">${index + 1}</td>
+      <td class="col-name">
+        <div class="game-cell">
+          <img
+            class="game-thumb"
+            src="${thumbnailSrc(g.name)}"
+            alt="${g.name}"
+          />
+          <div class="game-text">
+            <div class="game-title">${g.name}</div>
+            <span class="badge-hot">Sıcak</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-provider">${g.provider}</td>
+      <td><span class="rtp-pill">${g.rtp.toFixed(2)}%</span></td>
+      <td><span class="${deltaClass}">${deltaSign} ${deltaText}</span></td>
+      <td><span class="heat-pill">${g.heat}</span></td>
+      <td class="col-maxwin">
+        ${g.maxWinMultiplier}x<br />
+        <span class="maxwin-time">${minutesToText(lastMaxMinutes)}</span>
+      </td>
+      <td><span class="trend-pill ${tInfo.className}">${tInfo.label}</span></td>
+      <td><button class="btn btn-primary small" data-play-id="${g.id}">Oyna</button></td>
+    `;
+    hotBody.appendChild(tr);
+  });
 
+  // COLD TABLOSU
+  orderCold.forEach((id, index) => {
+    const g = gameById[id];
+    if (!g) return;
+    const tr = document.createElement("tr");
+    const tInfo = trendInfo(g.trendDirection || "flat");
+    const delta = g.deltaRtp || 0;
+    const deltaSign = delta >= 0 ? "▲" : "▼";
+    const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
+    const deltaText = Math.abs(delta).toFixed(2);
 
-    // COLD TABLOSU
-    orderCold.forEach((id, index) => {
-      const g = gameById[id];
-      if (!g) return;
-      const tr = document.createElement("tr");
-      const tInfo = trendInfo(g.trendDirection || "flat");
-      const delta = g.deltaRtp || 0;
-      const deltaSign = delta >= 0 ? "▲" : "▼";
-      const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
-      const deltaText = Math.abs(delta).toFixed(2);
+    tr.innerHTML = `
+      <td class="col-rank">${index + 1}</td>
+      <td class="col-name">
+        <div class="game-cell">
+          <img
+            class="game-thumb"
+            src="${thumbnailSrc(g.name)}"
+            alt="${g.name}"
+          />
+          <div class="game-text">
+            <div class="game-title">${g.name}</div>
+            <span class="badge-cold">Soğuk</span>
+          </div>
+        </div>
+      </td>
+      <td class="col-provider">${g.provider}</td>
+      <td><span class="rtp-pill">${g.rtp.toFixed(2)}%</span></td>
+      <td><span class="${deltaClass}">${deltaSign} ${deltaText}</span></td>
+      <td><span class="heat-pill cold">${g.heat}</span></td>
+      <td class="col-maxwin">
+        ${g.maxWinMultiplier}x<br />
+        <span class="maxwin-time">${minutesToText(g.lastMaxWinMinutes)}</span>
+      </td>
+      <td><span class="trend-pill ${tInfo.className}">${tInfo.label}</span></td>
+      <td><button class="btn btn-primary small" data-play-id="${g.id}">Oyna</button></td>
+    `;
+    coldBody.appendChild(tr);
+  });
 
-      tr.innerHTML = `
-        <td class="col-rank">${index + 1}</td>
-        <td class="col-name">
-          ${g.name}<br />
-          <span class="badge-cold">Soğuk</span>
-        </td>
-        <td class="col-provider">${g.provider}</td>
-        <td><span class="rtp-pill">${g.rtp.toFixed(2)}%</span></td>
-        <td><span class="${deltaClass}">${deltaSign} ${deltaText}</span></td>
-        <td><span class="heat-pill cold">${g.heat}</span></td>
-        <td class="col-maxwin">
-          ${g.maxWinMultiplier}x<br />
-          <span class="maxwin-time">${minutesToText(g.lastMaxWinMinutes)}</span>
-        </td>
-        <td><span class="trend-pill ${tInfo.className}">${tInfo.label}</span></td>
-        <td><button class="btn btn-primary small" data-play-id="${g.id}">Oyna</button></td>
-      `;
-      coldBody.appendChild(tr);
-    });
+  bindPlayButtons();
+}
 
-    bindPlayButtons();
-  }
 
   function bindPlayButtons() {
     document.querySelectorAll("[data-play-id]").forEach((btn) =>
