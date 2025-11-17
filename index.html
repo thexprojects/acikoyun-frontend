@@ -1106,7 +1106,7 @@ function thumbnailSrc(name) {
   return `thumbnails/${thumbnailFileName(name)}.webp`;
 }
 
-  function renderTables() {
+function renderTables() {
   const hotBody = document.getElementById("hot-body");
   const coldBody = document.getElementById("cold-body");
   if (!hotBody || !coldBody) return;
@@ -1118,6 +1118,7 @@ function thumbnailSrc(name) {
   orderHot.forEach((id, index) => {
     const g = gameById[id];
     if (!g) return;
+
     const tr = document.createElement("tr");
     const tInfo = trendInfo(g.trendDirection || "flat");
     const delta = g.deltaRtp || 0;
@@ -1125,6 +1126,7 @@ function thumbnailSrc(name) {
     const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
     const deltaText = Math.abs(delta).toFixed(2);
 
+    // Son max win süresi
     const key = g.id || g.name || `idx-${index}`;
     const h = hashString(String(key));
     const randomOffset = h % 57; // 0–56
@@ -1136,17 +1138,19 @@ function thumbnailSrc(name) {
       lastMaxMinutes = 3 + randomOffset; // 3–59
     }
 
+    // THUMBNAIL
+    const thumbSrc = getThumbnailSrc(g);
+    const thumbHtml = thumbSrc
+      ? `<img class="game-thumb" src="${thumbSrc}" alt="${g.name}" />`
+      : "";
+
     tr.innerHTML = `
       <td class="col-rank">${index + 1}</td>
       <td class="col-name">
         <div class="game-cell">
-          <img
-            class="game-thumb"
-            src="${thumbnailSrc(g.name)}"
-            alt="${g.name}"
-          />
+          ${thumbHtml}
           <div class="game-text">
-            <div class="game-title">${g.name}</div>
+            <div class="game-name">${g.name}</div>
             <span class="badge-hot">Sıcak</span>
           </div>
         </div>
@@ -1169,6 +1173,7 @@ function thumbnailSrc(name) {
   orderCold.forEach((id, index) => {
     const g = gameById[id];
     if (!g) return;
+
     const tr = document.createElement("tr");
     const tInfo = trendInfo(g.trendDirection || "flat");
     const delta = g.deltaRtp || 0;
@@ -1176,17 +1181,18 @@ function thumbnailSrc(name) {
     const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
     const deltaText = Math.abs(delta).toFixed(2);
 
+    const thumbSrc = getThumbnailSrc(g);
+    const thumbHtml = thumbSrc
+      ? `<img class="game-thumb" src="${thumbSrc}" alt="${g.name}" />`
+      : "";
+
     tr.innerHTML = `
       <td class="col-rank">${index + 1}</td>
       <td class="col-name">
         <div class="game-cell">
-          <img
-            class="game-thumb"
-            src="${thumbnailSrc(g.name)}"
-            alt="${g.name}"
-          />
+          ${thumbHtml}
           <div class="game-text">
-            <div class="game-title">${g.name}</div>
+            <div class="game-name">${g.name}</div>
             <span class="badge-cold">Soğuk</span>
           </div>
         </div>
@@ -1207,6 +1213,7 @@ function thumbnailSrc(name) {
 
   bindPlayButtons();
 }
+
 
 
   function bindPlayButtons() {
