@@ -1181,7 +1181,7 @@ function renderTables() {
     const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
     const deltaText = Math.abs(delta).toFixed(2);
 
-    const thumbSrc = getThumbnailSrc(g);
+    const thumbSrc = thumbnailSrc(g.name);
     const thumbHtml = thumbSrc
       ? `<img class="game-thumb" src="${thumbSrc}" alt="${g.name}" />`
       : "";
