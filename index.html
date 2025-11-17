@@ -377,13 +377,46 @@ table {
     .btn.small { padding: 3px 10px; font-size: 10px; }
     .sidebar-card { margin-bottom: 14px; }
     .winners-list { font-size: 11px; margin-top: 8px; }
-    .winners-list-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      padding: 5px 0;
-      border-bottom: 1px dashed rgba(31, 41, 55, 0.7);
-    }
+   .winners-list-row {
+  display: grid;
+  grid-template-columns: 1.4fr auto auto; /* 3 sütun: site/user – miktar – buton */
+  align-items: center;
+  gap: 6px;
+  padding: 5px 0;
+  border-bottom: 1px dashed rgba(31, 41, 55, 0.7);
+}
+
+.w-amount {
+  font-weight: 600;
+  font-size: 11px;
+  color: #bbf7d0;
+  text-align: right;
+  padding-right: 4px; /* hafif sola kayık gibi durur */
+}
+
+/* Siteye Git butonu */
+.w-site-btn {
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(55, 65, 81, 0.9);
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s ease;
+}
+
+.w-site-btn:hover {
+  border-color: rgba(250, 204, 21, 0.7);
+  background: rgba(24, 24, 27, 0.95);
+  color: #facc15;
+  transform: translateY(-1px);
+}
+
     .winners-list-row:last-child { border-bottom: none; }
     .w-site { color: var(--text-soft); }
     .w-user { color: var(--text-softer); font-size: 10px; }
@@ -1144,22 +1177,28 @@ orderHot.forEach((id, index) => {
     const container = document.getElementById("winners-list");
     if (!container) return;
     container.innerHTML = "";
-    winners.forEach((w, idx) => {
-      const row = document.createElement("div");
-      row.className = "winners-list-row";
-      row.innerHTML = `
-        <div>
-          <div class="w-site">${idx + 1}. ${w.site}</div>
-          <div class="w-user">Kullanıcı: ${w.user}</div>
-        </div>
-        <div class="w-amount">
-          <a href="${w.url}" target="_blank" rel="noopener" class="w-amount-link">
-            ${w.amount}
-          </a>
-        </div>
-      `;
-      container.appendChild(row);
-    });
+  winners.forEach((w, idx) => {
+  const row = document.createElement("div");
+  row.className = "winners-list-row";
+  row.innerHTML = `
+    <div>
+      <div class="w-site">${idx + 1}. ${w.site}</div>
+      <div class="w-user">Kullanıcı: ${w.user}</div>
+    </div>
+    <div class="w-amount">
+      <a href="${w.url}" target="_blank" rel="noopener" class="w-amount-link">
+        ${w.amount}
+      </a>
+    </div>
+    <div>
+      <a href="${w.url}" target="_blank" rel="noopener" class="w-site-btn">
+        Siteye Git
+      </a>
+    </div>
+  `;
+  container.appendChild(row);
+});
+
   }
 
   const adLinks = [
