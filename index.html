@@ -184,9 +184,12 @@
     margin-top: -14px !important;
   }
 }
-    @media (max-width: 980px) {
-      .page { grid-template-columns: minmax(0, 1fr); }
-    }
+   @media (max-width: 980px) {
+  .page {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 8px;   /* ← EKLENECEK SATIR BURASI */
+  }
+}
     .card {
       background: radial-gradient(circle at top left, #111827, #020617);
       border-radius: var(--radius-lg);
@@ -692,7 +695,7 @@ table {
   display: none;          /* varsayılan: görünmesin */
   max-width: 1280px;
   margin: 6px auto 0;
-  padding: 0 18px 6px;
+  padding: 0 18px 2px;
 }
 
 .fs-mobile-cta {
