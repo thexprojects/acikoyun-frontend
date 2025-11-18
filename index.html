@@ -687,6 +687,53 @@ table {
         max-width: none;
       }
     }
+    /* --- Mobil Freespin CTA --- */
+.fs-mobile-cta-wrapper {
+  display: none;          /* varsayılan: görünmesin */
+  max-width: 1280px;
+  margin: 6px auto 0;
+  padding: 0 18px 6px;
+}
+
+.fs-mobile-cta {
+  width: 100%;
+  border-radius: 999px;
+  border: 1px solid rgba(250, 204, 21, 0.7);
+  background: radial-gradient(circle at 0 0, #fef9c3, #fbbf24);
+  color: #111827;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.fs-arrow {
+  font-size: 16px;
+}
+
+/* Yanıp sönme efekti sadece metne */
+.fs-mobile-cta-text {
+  animation: fsBlink 1s linear infinite;
+}
+
+@keyframes fsBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* Sadece mobilde göster */
+@media (max-width: 980px) {
+  .fs-mobile-cta-wrapper {
+    display: block;
+  }
+}
+
 .footer {
   margin-top: 70px;
   padding: 40px 0 50px;
@@ -820,6 +867,15 @@ button:hover,
       <span class="ad-cta">Üye Ol</span>
     </a>
   </div>
+    <!-- MOBİL FREESPIN CTA MODÜLÜ -->
+  <div class="fs-mobile-cta-wrapper">
+    <button class="fs-mobile-cta" id="fs-mobile-cta">
+      <span class="fs-arrow">⬇</span>
+      <span class="fs-mobile-cta-text">FREESPIN TEKLİFLERİNİ GÖR</span>
+      <span class="fs-arrow">⬇</span>
+    </button>
+  </div>
+
   <main class="page">
     <section>
       <!-- ÜST BÖLÜM 728x90 XSLOT BANNER -->
@@ -937,11 +993,11 @@ button:hover,
                   </div>
         <div class="winners-list" id="winners-list"></div>
       </section>
-      <section class="card sidebar-card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">
-              <span class="icon">🎁</span>Freespin Teklifleri
+     <section class="card sidebar-card" id="freespin-section">
+  <div class="card-header">
+    <div>
+      <div class="card-title">
+        <span class="icon">🎁</span>Freespin Teklifleri
             </div>
             <div class="card-subtitle">Partner sitelerde öne çıkan FS’ler</div>
           </div>
@@ -1364,6 +1420,16 @@ function bindFreespinButtons() {
     bindAdBanners();
     bindFreespinButtons();
     bindHotAlertButton(); // 🔥 burası
+         // ✅ Mobil Freespin CTA tıklanınca freespin bölümüne kaydır
+    const fsCta = document.getElementById("fs-mobile-cta");
+    if (fsCta) {
+      fsCta.addEventListener("click", () => {
+        const target = document.getElementById("freespin-section");
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    }
   });
 </script>
 
