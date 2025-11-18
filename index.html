@@ -304,6 +304,20 @@ table {
   flex-shrink: 0;
   transition: all 0.25s ease;  /* 🔥 eklenen satır */
 }
+/* Hover efekti: aynı butonlar gibi lift + glow */
+.game-cell:hover .game-thumb {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 22px rgba(250, 204, 21, 0.25); /* butonlarla aynı */
+  opacity: 0.96;
+}
+.game-cell:hover .game-name {
+  color: #facc15; /* premium altın rengi */
+}
+    .game-cell:hover .game-thumb {
+  outline: 1px solid rgba(250, 204, 21, 0.7);
+  outline-offset: 2px;
+}
+
 
 .game-meta {
   display: flex;
