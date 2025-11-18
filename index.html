@@ -1321,7 +1321,7 @@ orderHot.forEach((id, index) => {
 });
 
 
-  // COLD TABLOSU
+    // COLD TABLOSU
   orderCold.forEach((id, index) => {
     const g = gameById[id];
     if (!g) return;
@@ -1337,6 +1337,20 @@ orderHot.forEach((id, index) => {
     const thumbHtml = thumbSrc
       ? `<img class="game-thumb" data-play-id="${g.id}" src="${thumbSrc}" alt="${g.name}" />`
       : "";
+
+    // ❄️ Soğuk oyunlar için 90–173 dk aralığında süre üret
+    const key = g.id || g.name || `cold-${index}`;
+    const h = hashString(String(key));
+    const span = 173 - 90 + 1;          // 84 farklı değer
+    let lastMaxMinutesCold;
+
+    // Eğer backend zaten 90–173 arası bir değer gönderdiyse onu kullan
+    if (g.lastMaxWinMinutes >= 90 && g.lastMaxWinMinutes <= 173) {
+      lastMaxMinutesCold = g.lastMaxWinMinutes;
+    } else {
+      // Aksi halde hash’e göre deterministik 90–173 arasında bir dakika üret
+      lastMaxMinutesCold = 90 + (h % span);
+    }
 
     tr.innerHTML = `
       <td class="col-rank">${index + 1}</td>
@@ -1355,13 +1369,14 @@ orderHot.forEach((id, index) => {
       <td><span class="heat-pill cold">${g.heat}</span></td>
       <td class="col-maxwin">
         ${g.maxWinMultiplier}x<br />
-        <span class="maxwin-time">${minutesToText(g.lastMaxWinMinutes)}</span>
+        <span class="maxwin-time">${minutesToText(lastMaxMinutesCold)}</span>
       </td>
       <td><span class="trend-pill ${tInfo.className}">${tInfo.label}</span></td>
       <td><button class="btn btn-primary small" data-play-id="${g.id}">Oyna</button></td>
     `;
     coldBody.appendChild(tr);
   });
+
 
   bindPlayButtons();
 }
