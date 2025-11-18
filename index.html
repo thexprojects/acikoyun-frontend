@@ -1141,64 +1141,61 @@ function renderTables() {
   hotBody.innerHTML = "";
   coldBody.innerHTML = "";
 
-  // HOT TABLOSU
-  orderHot.forEach((id, index) => {
-    const g = gameById[id];
-    if (!g) return;
+ // HOT TABLOSU
+orderHot.forEach((id, index) => {
+  const g = gameById[id];
+  if (!g) return;
 
-    const tr = document.createElement("tr");
-    const tInfo = trendInfo(g.trendDirection || "flat");
-    const delta = g.deltaRtp || 0;
-    const deltaSign = delta >= 0 ? "▲" : "▼";
-    const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
-    const deltaText = Math.abs(delta).toFixed(2);
+  const tr = document.createElement("tr");
+  const tInfo = trendInfo(g.trendDirection || "flat");
+  const delta = g.deltaRtp || 0;
+  const deltaSign = delta >= 0 ? "▲" : "▼";
+  const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
+  const deltaText = Math.abs(delta).toFixed(2);
 
-    // Son max win süresi (3–59 dk)
-    const key = g.id || g.name || `idx-${index}`;
-    const h = hashString(String(key));
-    const randomOffset = h % 57; // 0–56
-    let lastMaxMinutes;
+  // Son max win süresi (3–59 dk)
+  const key = g.id || g.name || `idx-${index}`;
+  const h = hashString(String(key));
+  const randomOffset = h % 57; // 0–56
+  let lastMaxMinutes;
 
-    if (g.lastMaxWinMinutes >= 3 && g.lastMaxWinMinutes <= 59) {
-      lastMaxMinutes = g.lastMaxWinMinutes;
-    } else {
-      lastMaxMinutes = 3 + randomOffset; // 3–59
-    }
+  if (g.lastMaxWinMinutes >= 3 && g.lastMaxWinMinutes <= 59) {
+    lastMaxMinutes = g.lastMaxWinMinutes;
+  } else {
+    lastMaxMinutes = 3 + randomOffset; // 3–59
+  }
 
-    // THUMBNAIL (🔥 hem resim hem buton aynı data-play-id)
-    const thumbSrc = thumbnailSrc(g.name);
-    const thumbHtml = thumbSrc
-      ? `<img class="game-thumb" data-play-id="${g.id}" src="${thumbSrc}" alt="${g.name}" />`
-      : "";
+  // THUMBNAIL – hem resim hem isim tıklanabilir
+  const thumbSrc = thumbnailSrc(g.name);
+  const thumbHtml = thumbSrc
+    ? `<img class="game-thumb" data-play-id="${g.id}" src="${thumbSrc}" alt="${g.name}" />`
+    : "";
 
-    tr.innerHTML = `
-      <td class="col-rank">${index + 1}</td>
-      <td class="col-name">
-        <div class="game-cell">
-          ${thumbHtml}
-          <div class="game-text">
-            <td class="col-name">
-  <div class="game-cell">
-    ${thumbHtml}
-    <div class="game-text">
-     <div class="game-name" data-play-id="${g.id}">${g.name}</div>
-            <span class="badge-hot">Sıcak</span>
-          </div>
+  tr.innerHTML = `
+    <td class="col-rank">${index + 1}</td>
+    <td class="col-name">
+      <div class="game-cell">
+        ${thumbHtml}
+        <div class="game-text">
+          <div class="game-name" data-play-id="${g.id}">${g.name}</div>
+          <span class="badge-hot">Sıcak</span>
         </div>
-      </td>
-      <td class="col-provider">${g.provider}</td>
-      <td><span class="rtp-pill">${g.rtp.toFixed(2)}%</span></td>
-      <td><span class="${deltaClass}">${deltaSign} ${deltaText}</span></td>
-      <td><span class="heat-pill">${g.heat}</span></td>
-      <td class="col-maxwin">
-        ${g.maxWinMultiplier}x<br />
-        <span class="maxwin-time">${minutesToText(lastMaxMinutes)}</span>
-      </td>
-      <td><span class="trend-pill ${tInfo.className}">${tInfo.label}</span></td>
-      <td><button class="btn btn-primary small" data-play-id="${g.id}">Oyna</button></td>
-    `;
-    hotBody.appendChild(tr);
-  });
+      </div>
+    </td>
+    <td class="col-provider">${g.provider}</td>
+    <td><span class="rtp-pill">${g.rtp.toFixed(2)}%</span></td>
+    <td><span class="${deltaClass}">${deltaSign} ${deltaText}</span></td>
+    <td><span class="heat-pill">${g.heat}</span></td>
+    <td class="col-maxwin">
+      ${g.maxWinMultiplier}x<br />
+      <span class="maxwin-time">${minutesToText(lastMaxMinutes)}</span>
+    </td>
+    <td><span class="trend-pill ${tInfo.className}">${tInfo.label}</span></td>
+    <td><button class="btn btn-primary small" data-play-id="${g.id}">Oyna</button></td>
+  `;
+  hotBody.appendChild(tr);
+});
+
 
   // COLD TABLOSU
   orderCold.forEach((id, index) => {
