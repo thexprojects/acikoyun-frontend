@@ -302,21 +302,23 @@ table {
   border-radius: 6px;
   object-fit: cover;
   flex-shrink: 0;
-  transition: all 0.25s ease;  /* 🔥 eklenen satır */
+  transition: all 0.25s ease;
+  cursor: pointer;              /* tıklanabilir hissetsin */
 }
+
 /* Hover efekti: aynı butonlar gibi lift + glow */
 .game-cell:hover .game-thumb {
   transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 8px 22px rgba(250, 204, 21, 0.25); /* butonlarla aynı */
+  box-shadow: 0 8px 22px rgba(250, 204, 21, 0.25);
   opacity: 0.96;
-}
-.game-cell:hover .game-name {
-  color: #facc15; /* premium altın rengi */
-}
-    .game-cell:hover .game-thumb {
   outline: 1px solid rgba(250, 204, 21, 0.7);
   outline-offset: 2px;
 }
+
+.game-cell:hover .game-name {
+  color: #facc15;
+}
+
 
 
 .game-meta {
@@ -1141,7 +1143,7 @@ function renderTables() {
     const deltaClass = delta >= 0 ? "rtp-change" : "rtp-change down";
     const deltaText = Math.abs(delta).toFixed(2);
 
-    // Son max win süresi
+    // Son max win süresi (3–59 dk)
     const key = g.id || g.name || `idx-${index}`;
     const h = hashString(String(key));
     const randomOffset = h % 57; // 0–56
@@ -1153,10 +1155,10 @@ function renderTables() {
       lastMaxMinutes = 3 + randomOffset; // 3–59
     }
 
-    // THUMBNAIL
+    // THUMBNAIL (🔥 hem resim hem buton aynı data-play-id)
     const thumbSrc = thumbnailSrc(g.name);
     const thumbHtml = thumbSrc
-      ? `<img class="game-thumb" src="${thumbSrc}" alt="${g.name}" />`
+      ? `<img class="game-thumb" data-play-id="${g.id}" src="${thumbSrc}" alt="${g.name}" />`
       : "";
 
     tr.innerHTML = `
@@ -1197,9 +1199,10 @@ function renderTables() {
     const deltaText = Math.abs(delta).toFixed(2);
 
     const thumbSrc = thumbnailSrc(g.name);
- const thumbHtml = thumbSrc
-  ? `<img class="game-thumb" data-play-id="${g.id}" src="${thumbSrc}" alt="${g.name}" />`
-  : "";
+    const thumbHtml = thumbSrc
+      ? `<img class="game-thumb" data-play-id="${g.id}" src="${thumbSrc}" alt="${g.name}" />`
+      : "";
+
     tr.innerHTML = `
       <td class="col-rank">${index + 1}</td>
       <td class="col-name">
