@@ -1182,10 +1182,9 @@ function renderTables() {
     const deltaText = Math.abs(delta).toFixed(2);
 
     const thumbSrc = thumbnailSrc(g.name);
-    const thumbHtml = thumbSrc
-      ? `<img class="game-thumb" src="${thumbSrc}" alt="${g.name}" />`
-      : "";
-
+ const thumbHtml = thumbSrc
+  ? `<img class="game-thumb" data-play-id="${g.id}" src="${thumbSrc}" alt="${g.name}" />`
+  : "";
     tr.innerHTML = `
       <td class="col-rank">${index + 1}</td>
       <td class="col-name">
