@@ -917,6 +917,13 @@ button:hover,
       </div>
       <span class="ad-cta">Üye Ol</span>
     </a>
+    <a href="#" class="ad-banner">
+      <div>
+        <span class="ad-site">Bahsegel</span>
+        <span class="ad-text">· 60.000 TL Casino Bonusu</span>
+      </div>
+      <span class="ad-cta">Üye Ol</span>
+    </a>
   </div>
   <!-- MOBİL TELEGRAM CTA MODÜLÜ -->
 <div class="tg-mobile-cta-wrapper">
@@ -970,6 +977,16 @@ button:hover,
     <img
       src="banners/ligobet728x90.gif"
       alt="Ligobet Banner"
+      class="strip-gif-img"
+    />
+  </a>
+</section>
+      <!-- ÜST BÖLÜM 728x90 BAHSEGEL BANNER -->
+<section class="card strip-gif-card">
+  <a href="https://bhs-spa.meirdr.xyz/casino?partner=p5186p21832p8e44#registration" target="_blank">
+    <img
+      src="banners/bahsegel728x90.gif"
+      alt="Bahsegel Banner"
       class="strip-gif-img"
     />
   </a>
@@ -1103,6 +1120,15 @@ button:hover,
     <button
       class="btn btn-primary small fs-btn"
       data-url="https://cutt.ly/Xtelei33"
+    >
+      Hemen Al
+    </button>
+  </div>
+  <div class="freespin-row">
+    <span>Bahsegel · <span class="game">60.000 TL Casino Bonusu</span></span>
+    <button
+      class="btn btn-primary small fs-btn"
+      data-url="https://bhs-spa.meirdr.xyz/casino?partner=p5186p21832p8e44#registration"
     >
       Hemen Al
     </button>
@@ -1494,16 +1520,19 @@ orderHot.forEach((id, index) => {
   }
 
   const adLinks = [
-    "https://cutt.ly/QtelcFFs",
-    "https://cutt.ly/NteEarVX",
-    "https://cutt.ly/Xtelei33"
+    "https://cutt.ly/QtelcFFs", // Ligobet
+    "https://cutt.ly/NteEarVX", // Xslot
+    "https://cutt.ly/Xtelei33", // Otobet
+    "https://bhs-spa.meirdr.xyz/casino?partner=p5186p21832p8e44#registration" // Bahsegel
   ];
 
   function bindAdBanners() {
     document.querySelectorAll(".ad-banner").forEach((banner, index) => {
       banner.addEventListener("click", (e) => {
         e.preventDefault();
-        window.open(adLinks[index], "_blank");
+        if (adLinks[index]) {
+          window.open(adLinks[index], "_blank");
+        }
       });
     });
   }
@@ -1566,9 +1595,3 @@ if (tgCta) {
  
 </body>
 </html>
-
-
-
-
-
-
